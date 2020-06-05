@@ -12,6 +12,8 @@ import socket
 import json
 import signal
 
+from flatten_dict import flatten
+
 MQTT_HOST = os.environ.get('MQTT_HOST', '127.0.0.1')
 MQTT_PORT = int(os.environ.get('MQTT_PORT', 1883))
 CARBON_SERVER = os.environ.get('CARBON_SERVER', '127.0.0.1')
@@ -96,6 +98,7 @@ def on_message(mosq, userdata, msg):
                    subkeys to pass to Carbon'''
                 try:
                     st = json.loads(msg.payload)
+                    st = flatten(st, reducer='dot')
                     for k in st:
                         if is_number(st[k]):
                             lines.append("%s.%s %f %d" % (carbonkey, k, float(st[k]), now))
