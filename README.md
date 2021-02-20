@@ -53,6 +53,21 @@ test.jp.j2.temp 89.300000 1363169282
 test.jp.j2.size 69.000000 1363169282
 ```
 
+### Nested dicts handling
+
+Complex json payloads will also be handled using this setup, consider
+
+```
+mosquitto_pub  -t test/jp/j2 -m '{ "electric": { "current": 69, "voltage": 220 } }'
+```
+Produces the following Carbon keys
+```
+test.jp.2.electric.current 69.000000 1363169282
+test.jp.2.electric.voltage 220.000000 1363169282
+
+```
+
+
 ## Todo
 
 A lot. 
