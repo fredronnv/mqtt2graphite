@@ -1,0 +1,13 @@
+---
+version: "2"
+services: 
+ mqtt2graphite:
+    container_name: mqtt2graphite
+    restart: unless-stopped
+    build: .
+    volumes:
+      - ./map.example:/map
+    environment:
+      MQTT_HOST: 172.16.1.1
+      CARBON_SERVER: 127.0.0.1
+      CARBON_PORT: 2003
